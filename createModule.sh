@@ -7,13 +7,13 @@ xcode_proj="${proj_dir}/${project_name}.xcodeproj"
 modules_dir="${project_container_dir}/Modules"
 if test -d $xcode_proj
 then
-  [ ! -d $modules_dir ] && mkdir -p modules_dir || echo "$modules_dir Exists."
+  [ ! -d $modules_dir ] && mkdir -p modules_dir || echo "$modules_dir Exist."
 else
    echo "Invalid xcode project."
    exit 12
 fi
 module_dir="$modules_dir/$1"
-test ! -d $module_dir && mkdir -p $module_dir || echo "$module_dir Exists."
+test ! -d $module_dir && mkdir -p $module_dir || echo "$module_dir Exist."
 if [ $1 ]
 then
   ext=".swift"
@@ -34,7 +34,7 @@ then
   for file in $controllerFile $routerFile $configuratorFile $mediatorFile $workerFile $presenterFile
   do
     touch $file
-    filename=${file##*/}    
+    filename=${file##*/}
     [ $file ] && echo -e "//\n// $filename\n// Created by $(whoami) on $(date +"%d/%m/%Y"). \n//\n// Copyright © $(date +"%Y") $(whoami). All rights reserved.\n//\n\n\nimport Foundation" >> $file || echo "$file file not found."
   done
 
