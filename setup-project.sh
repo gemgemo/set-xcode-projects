@@ -4,7 +4,7 @@
 red="\033[31m"
 green='\033[0;32m'
 yellow='\033[0;33m'
-collor_of='\033[0m'
+color_off='\033[0m'
 
 #1. Check if a valid xcode project
 dir_path=$(pwd)
@@ -43,11 +43,38 @@ then
   # Create sub directories
   cells_dir="$project_dir_path/UIControls/Cells"
   [ ! -d $cells_dir ] && mkdir -p $cells_dir || echo -e $yellow "${cells_dir##*/} Created in advance."
-  appModule="$project_dir_path/Modules/App"
-  test ! -d $appModule && mmkdir -p $appModule || echo -e $yellow "${appModule##*/} Created in advance."
-  # Create files
+
+  # Create files => public title
+  # vip protocols -> Controller-configurator-mediator-presenter-model-router create protocols file and write protocols in it.
+  echo -e $color_off
+  common_dir="${project_dir_path}/Common"
+  protocols_swift_file="${common_dir}/Protocols${swift_ext}"
+  test ! -f $protocols_swift_file && touch $protocols_swift_file || echo -e $yellow "${protocols_swift_file##*/} Exist."
+  echo -e $color_off
+  # Write protocols header
+  if [ -f $protocols_swift_file ]
+  then
+   echo -e "//\n// ${protocols_swift_file##*/}\n// Created by $(whoami) on $(date +"%d/%m/%Y"). \n//\n// Copyright © $(date +"%Y") $(whoami). All rights reserved.\n//\n\n\nimport Foundation\n\n\n" > $protocols_swift_file
+   echo -e "//#: VIP Design pattern blueprint\n\nprotocol Controller: class { }\nprotocol Model { }\nprotocol Mediator: class { }\nprotocol Configurator: class { }\nprotocol Worker: class { }\nprotocol Presenter: class { }\nprotocol Router: class { }" >> $protocols_swift_file
+   echo -e "\n\n// MARK: - Naming
+protocol Naming { }
+extension Naming {
+    func name(of className: AnyClass) -> String {
+         return String.init(describing: className)
+    }
+}" >> $protocols_swift_file
+  else
+    echo -e $red "${protocols_swift_file##*/} file not found."
+  fi
+
   # app module files
-  # vip protocols
+  #appModule="$project_dir_path/Modules/App"
+  #test ! -d $appModule && mkdir -p $appModule || echo -e $yellow "${appModule##*/} Module Created in advance."
+  _bash_project_path_=${0%/*}
+  create_module_script="${_bash_project_path_}/createModule.sh App"
+  . $create_module_script
+
+
   else
     echo -e $red "Not Found xcode project main directory."
   fi
