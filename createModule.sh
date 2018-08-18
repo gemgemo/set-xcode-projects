@@ -1,4 +1,8 @@
 #!/bin/bash
+red="\033[31m"
+green='\033[0;32m'
+yellow='\033[0;33m'
+color_off='\033[0m'
 
 proj_dir=$(pwd)
 project_name=${proj_dir##*/}
@@ -7,13 +11,14 @@ xcode_proj="${proj_dir}/${project_name}.xcodeproj"
 modules_dir="${project_container_dir}/Modules"
 if test -d $xcode_proj
 then
-  [ ! -d $modules_dir ] && mkdir -p modules_dir || echo "$modules_dir Exist."
+  [ ! -d $modules_dir ] && mkdir -p modules_dir || echo -e $yellow "${modules_dir##*/} directory already Exist."
+  echo -e $color_off
 else
-   echo "Invalid xcode project."
+   echo -e $red "Invalid xcode project."
    exit 12
 fi
 module_dir="$modules_dir/$1"
-test ! -d $module_dir && mkdir -p $module_dir || echo "$module_dir Exist."
+test ! -d $module_dir && mkdir -p $module_dir || echo -e $yellow "${module_dir##*/} module exist."
 if [ $1 ]
 then
   ext=".swift"
@@ -78,27 +83,20 @@ then
   "
   echo -e $workerContent >> $workerFile
 
-  presenterContent="import UIKit\n\n
-  internal final class ${1}${presenter}: ${presenter}\n
-  {\n
+  presenterContent="
+import UIKit\n\n
+internal final class ${1}${presenter}: ${presenter}\n
+{\n
     \n
-  }\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
   "
   echo -e $presenterContent >> $presenterFile
-
+  echo -e $green "${1} Module created successfully."
 else
-    echo "Invalid module name."
+    echo -e $red "Invalid module name."
 fi
 
 
-
-
-<<COMMENT
-//
-//  CategoriesController.swift
-//  jamaldemoarcoproject
-//
-//  Created by Jamal Alayeq on 7/27/18.
-//  Copyright © 2018 Jamal Elayeq. All rights reserved.
-//
-COMMENT>>
+# <<COMMENT
+# Check for every file if exist or not.
+# COMMENT>>

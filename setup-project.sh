@@ -11,11 +11,10 @@ dir_path=$(pwd)
 proj_name=${dir_path##*/}
 project_dir_path="$dir_path/$proj_name"
 swift_ext=".swift"
-echo Project path is: $dir_path
-echo Project name is: $proj_name
-echo Main Directory is: $project_dir_path
-
-if [ -d *.xcodeproj ]
+echo -e $green Working Directory is: $project_dir_path
+echo -e $color_off
+_xcodeproj_="$project_dir_path.xcodeproj"
+if [ -d $_xcodeproj_ ]
 then
   echo -e $green "Valid XCode project."
   if [ -d $project_dir_path ]
@@ -67,13 +66,10 @@ extension Naming {
     echo -e $red "${protocols_swift_file##*/} file not found."
   fi
 
-  # app module files
-  #appModule="$project_dir_path/Modules/App"
-  #test ! -d $appModule && mkdir -p $appModule || echo -e $yellow "${appModule##*/} Module Created in advance."
+  # Create app module
   _bash_project_path_=${0%/*}
-  create_module_script="${_bash_project_path_}/createModule.sh App"
-  . $create_module_script
-
+  create_module_script="${_bash_project_path_}/createModule.sh"
+  . $create_module_script App
 
   else
     echo -e $red "Not Found xcode project main directory."
@@ -81,16 +77,12 @@ extension Naming {
 else
   echo -e $red "Invalid xcode project."
 fi
+echo -e $color_off
 
 
 
-
-<<COMMENTS
- - VIP design pattern -
-get project directory project
-check if valid project
-remove generic view controller
-create main dirs
-create common files - protocols -
-create run file: run any command created
-COMMENTS>>
+#<<COMMENTS
+#- VIP design pattern -
+#set all in function to create CL tool
+#Check if app module created and if project is prepared befor this time
+#COMMENTS>>
