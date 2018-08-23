@@ -34,3 +34,7 @@ function vip() {
   #     echo -e $red"Need one entry: '-c' to prepare project or '-m' {module-name} to create module."
   # fi
 }
+
+
+# COMMENTS
+# create install script

@@ -18,7 +18,20 @@ else
    exit 12
 fi
 module_dir="$modules_dir/$1"
-test ! -d $module_dir && mkdir -p $module_dir || echo -e $yellow "${module_dir##*/} module exist."
+if test ! -d $module_dir
+    then
+        mkdir -p $module_dir
+    else
+         echo -e $yellow "${module_dir##*/} module exist."
+         exit 23
+         #echo -e $color_off "If you want to create files enter y or to cancel enter n."
+         #read cml
+         #if [ $cml == "n" ]
+            #then
+                #exit 23
+         #fi
+fi
+
 if [ $1 ]
 then
   ext=".swift"
@@ -97,6 +110,4 @@ else
 fi
 
 
-# <<COMMENT
-# Check for every file if exist or not.
-# COMMENT>>
+# COMMENT

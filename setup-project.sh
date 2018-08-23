@@ -81,8 +81,4 @@ echo -e $color_off
 
 
 
-#<<COMMENTS
-#- VIP design pattern -
-#set all in function to create CL tool
-#Check if app module created and if project is prepared befor this time
-#COMMENTS>>
+# COMMENTS
